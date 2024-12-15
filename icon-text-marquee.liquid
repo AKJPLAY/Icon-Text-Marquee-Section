@@ -1,0 +1,137 @@
+{%- comment -%}
+    Add Link to head element
+    <script src="https://cdn.jsdelivr.net/npm/marquee3000@1.0.8/marquee3k-noUMD.min.js"></script>
+
+    Add before this script </body>
+    <script>
+        if (Shopify.designMode) {
+            class MarqueeSection extends HTMLElement {
+                constructor(){
+                    super();
+                    Marquee3k.init();    
+                }
+            }
+            customElements.define('marquee-section', MarqueeSection);
+        }else {
+            Marquee3k.init();
+        }
+    </script>
+{%- endcomment -%}
+{% style %}
+    #shopify-section-{{ section.id }} {
+        --text-color: {{ section.settings.text_color }}; 
+        --background: {{ section.settings.bg_color }};
+    }
+    #shopify-section-{{ section.id }} {
+        background: var(--background, #FEE2E2);
+        padding: 15px 0;
+        overflow: hidden;
+    }
+    #shopify-section-{{ section.id }} .inner-container {
+        display: flex;
+    }
+    #shopify-section-{{ section.id }} .inner-container .item {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin: 0 20px;
+    }
+    @media screen and (max-width: 750px) {
+        #shopify-section-{{ section.id }} .inner-container .item {
+            gap: 10px;
+            margin: 0 10px;
+        }
+    }
+    #shopify-section-{{ section.id }} .inner-container .item .icon-wrapper img {
+        width: 32px;
+        height: 32px;
+        -o-object-fit: contain;
+            object-fit: contain;
+    }
+    @media screen and (max-width: 750px) {
+        #shopify-section-{{ section.id }} .inner-container .item .icon-wrapper img {
+            width: 24px;
+            height: 24px;
+        }
+    }
+    #shopify-section-{{ section.id }} .inner-container .item .text_title {
+        font-family: "Onest";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 23px;
+        color: var(--text-color, #000000);
+    }
+    @media screen and (max-width: 750px) {
+        #shopify-section-{{ section.id }} .inner-container .item .text_title {
+            font-size: 16px;
+            line-height: 20px;
+        }
+    }
+{% endstyle %}
+
+<marquee-section class="container" style="{{ cssVariables }}">
+    <div class="marquee-{{ section.id }} marquee3k">
+        <div>
+            <div class="inner-container">
+                {% for block in section.blocks %}
+                    <div class="item">
+                        <div class="icon-wrapper">
+                            {{ block.settings.icon | img_url: '32x' | img_tag: block.settings.icon, 'icon-image' }}
+                        </div>
+                        <h2 class="text_title">{{ block.settings.title }}</h2>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</marquee-section>
+
+{% schema %}
+{
+    "name": "Icon Text Marqeuee",
+    "class": "marquee-icon-text",
+    "presets": [
+        {
+            "name":"Icon Text Marqeuee"
+        }
+    ],
+    "blocks": [
+        {
+            "name": "Icon",
+            "type": "image_picker",
+            "settings": [
+                {
+                    "type": "image_picker",
+                    "id": "icon",
+                    "label": "Icon"
+                },
+                {
+                    "type": "text",
+                    "id": "title",
+                    "label": "Title",
+                    "default": "Main Title Here"
+                }
+            ]
+        }
+    ],
+    "settings": [
+        {
+            "type": "header",
+            "content": "Color"
+        },
+        {
+            "type": "color",
+            "id": "bg_color",
+            "label": "Background",
+            "default": "#FEE2E2"
+        },
+        {
+            "type": "color",
+            "id": "text_color",
+            "label": "Text",
+            "default": "#000000"
+        }
+    ]
+}
+{% endschema %}
