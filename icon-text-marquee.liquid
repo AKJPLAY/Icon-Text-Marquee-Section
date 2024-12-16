@@ -21,6 +21,15 @@
     #shopify-section-{{ section.id }} {
         --text-color: {{ section.settings.text_color }}; 
         --background: {{ section.settings.bg_color }};
+        /* Variables You can set
+            --title-font: ;
+            --title-font-weight: ;
+            --title-font-size-lg: ;
+            --title-font-size-sm: ;
+            --text-color: ;
+            --icon-width-lg: ;
+            --icon-width-sm: ;
+        */
     }
     #shopify-section-{{ section.id }} {
         background: var(--background, #FEE2E2);
@@ -43,29 +52,29 @@
         }
     }
     #shopify-section-{{ section.id }} .inner-container .item .icon-wrapper img {
-        width: 32px;
-        height: 32px;
+        width: var(--icon-width-lg, 32px);
+        height: var(--icon-width-lg, 32px);
         -o-object-fit: contain;
             object-fit: contain;
     }
     @media screen and (max-width: 750px) {
         #shopify-section-{{ section.id }} .inner-container .item .icon-wrapper img {
-            width: 24px;
-            height: 24px;
+            width: var(--icon-width-sm, 24px);
+            height: var(--icon-width-sm, 24px);
         }
     }
     #shopify-section-{{ section.id }} .inner-container .item .text_title {
-        font-family: "Onest";
+        font-family: var(--title-font, "Onest");
         font-style: normal;
-        font-weight: 400;
-        font-size: 18px;
-        line-height: 23px;
+        font-weight: var(--title-font-weight, 400);
+        font-size: var(--title-font-size-lg, 18px);
+        line-height: 1.277;
         color: var(--text-color, #000000);
     }
     @media screen and (max-width: 750px) {
         #shopify-section-{{ section.id }} .inner-container .item .text_title {
-            font-size: 16px;
-            line-height: 20px;
+            font-size: var(--title-font-size-sm, 16px);
+            line-height: 1.125;
         }
     }
 {% endstyle %}
